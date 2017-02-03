@@ -195,7 +195,7 @@ datatable(count1, options = list(pageLength = 10))
 
 
 
-From the chart above, it is obvious but not surprise to see that President Trump gave the world a simple and short inaugural speech. The number of sentences, the average words per sentence, the total words, the total vocabulary are the smallest in recent several decades. Especially for the total vocabulary, he used 579 different words in his speech, much less than the average level of the inauguration speech. 
+From the chart above, it is obvious but not surprise to see that President Trump gave the world a simple and short inaugural speech. The number of sentences, the average words per sentence, the total words, the total vocabulary are the lowest in recent several decades. Especially for the total vocabulary, he used 579 different words in his speech, much less than the average level of the inauguration speech. 
 
 ```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width="400px"}
 knitr::include_graphics("../figs/1.png")
