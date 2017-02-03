@@ -1,19 +1,21 @@
 ---
-title: "What Can We See From Inaugural Addresses"
+title: "What Do Inauguration Speeches Tell Us?"
 output:
   html_document: default
   html_notebook: default
   pdf_document: default
 ---
 
-Inauguration speech, known as the first official speech that the new US President will give to the world, shows that how he and his team will lead the country and how this country will develop in the next four years. More or less, the inauguration speech also illustrates the character of the President and his attitude towards this special position. What these Presidents have said reflects what points has this country focused on and what problems has this country been faced. Therefore, it is interesting and meaningful to analyze the differences among these inauguration speeches.
-```{r libraries, message=FALSE, warning=FALSE, include=FALSE}
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width="400px"}
+knitr::include_graphics("../figs/3.jpg")
+```
+Inauguration speech, known as the first official speech that the new US President will give to the world, shows that how the President and his team will lead the country and how this country will develop in the next four years. More or less, the inauguration speech also illustrates the character of the President and his attitude towards this special position. What these Presidents have said reflects what points has this country focused on and what problems has this country been faced. Therefore, it is interesting and meaningful to analyze the differences among these inauguration speeches.
+```{r load libraries, message=FALSE, warning=FALSE, include=FALSE}
 # Step 0: check and install needed packages. Load the libraries and functions. 
-packages.used=c("rvest", "tibble", "qdap", 
-                "sentimentr", "gplots", "dplyr",
-                "tm", "syuzhet", "factoextra", 
-                "beeswarm", "scales", "RColorBrewer",
-                "RANN", "tm", "topicmodels","DT","languageR","NLP","openNLP","magrittr","ggplot2","tidytext","wordcloud","grid","gridExtra")
+packages.used=c("rvest", 
+                "sentimentr", "qdap","gplots", "dplyr",
+                "tm", "syuzhet", "scales", "RColorBrewer",
+                "RANN", "tm","DT","languageR","NLP","openNLP","magrittr","ggplot2","tidytext","wordcloud","grid","gridExtra","knitr")
 
 # check packages that need to be installed.
 packages.needed=setdiff(packages.used, 
@@ -26,19 +28,15 @@ if(length(packages.needed)>0){
 
 # load packages
 library("rvest")
-library("tibble")
 library("qdap")
 library("sentimentr")
 library("gplots")
 library("dplyr")
 library("tm")
 library("syuzhet")
-library("factoextra")
-library("beeswarm")
 library("scales")
 library("RColorBrewer")
 library("RANN")
-library("topicmodels")
 library("DT")
 library("languageR")
 library("NLP")
@@ -49,15 +47,11 @@ library("tidytext")
 library("wordcloud")
 library("grid")
 library("gridExtra")
+library("knitr")
 
 
 source("../lib/plotstacked.R")
 source("../lib/speechFuncs.R")
-```
-
-```{r, include=FALSE}
-#This notebook was prepared with the following environmental settings.
-print(R.version)
 ```
 
 ```{r Data Harvest, message=FALSE, warning=FALSE, include=FALSE}
@@ -146,7 +140,8 @@ average_words_per_sentence<-round(tapply(sentence.list.sel$word.count, sentence.
 total_words<-tapply(sentence.list.sel$word.count, sentence.list.sel$President, sum)
 count<-data.frame(number_of_sentences, average_words_per_sentence, total_words)
 
-filenames <- Sys.glob("~/Desktop/Spr2017-Proj1-xuanzix/data/fulltext/*-1.txt")
+filenames <- Sys.glob("../data/fulltext/*-1.txt")
+
 texts <- filenames %>%
   lapply(readLines) %>%
   lapply(paste0, collapse = " ") %>%
@@ -192,7 +187,7 @@ count1<-rbind(count1,a)
 
 
 ```{r, echo=FALSE}
-datatable(count1, options = list(pageLength = 9))
+datatable(count1, options = list(pageLength = 10))
 ```
 
 
@@ -203,12 +198,14 @@ datatable(count1, options = list(pageLength = 9))
 From the chart above, it is obvious but not surprise to see that President Trump gave the world a simple and short inaugural speech. The number of sentences, the average words per sentence, the total words, the total vocabulary are the smallest in recent several decades. Especially for the total vocabulary, he used 579 different words in his speech, much less than the average level of the inauguration speech. 
 
 ```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width="400px"}
-knitr::include_graphics("/Users/xuxuanzi/Desktop/Spr2017-Proj1-xuanzix/figs/1.png")
+knitr::include_graphics("../figs/1.png")
 ```
 
-Two reasons can be considered reasonable. First, Trump wants to show citizens a different personal style compared with those Presidents known as famous politicians. Actually, this is one of the reasons why he could get such a huge amount of supporters. From the inauguration speech, he has already started his plan making some changes in this country. Second, Trump is a business man but not a politician, he does not have much experience giving speech in front of such a big crowd. So, he shortened his sentence and reduced his vocabulary in order to avoid mistakes. In the following parts, considering about the sentimental analysis, there are more reasons to explain his short inauguration speech.
+One of the possible reasons is that President Trump wants to show citizens a different personal style compared with those Presidents known as famous politicians. Actually, this is one of the reasons why he could get such a huge amount of supporters. From the inauguration speech, he has already started his plan making some changes in this country. Or maybe just as he said he didn't want people standing out in the cold for a long time.
 
-### Let's focus on the shift in inauguration speeches
+To visualize how inauguration speeches changed over time, I made following four plots.
+
+### Let's focus on how inauguration speeches have changed
 
 ```{r wordplot, message=FALSE, warning=FALSE, include=FALSE}
 theme.widebar <-
@@ -247,7 +244,7 @@ p2<-data1%>%
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-As time goes on, in inauguration speech, the total words have not changed a lot and this value has turned to be stable in recent several decades.From the figure, we can see that in early days, it was usual that the total words of one year was much more or less than the next year or the previous year. But nowadays, this number has been stabilized to be around 2000. This is because the inauguration speech has played a more and more important role these years. Presidents use it to show his plan and power in the next few years. The best way making a speech serious and formal is to standardize the speech in terms of the length and expression. Thus, the total words have been controlled. 
+As time goes on, in inauguration speech, the total words and total vacabulary have not changed a lot and this value has turned to be stable in recent several decades. From the figure, we can see that in early days, it was usual that the total words of one year was much more or less than the next year or the previous year. But nowadays, this number has been stabilized to be around 2000. This is because the inauguration speech has played a more and more important role these years. Presidents use it to show his plan and power in the next few years. The best way making a speech serious and formal is to standardize the speech in terms of the length and expression. Thus, the total words have been controlled. 
 
 ```{r, echo=FALSE, fig.align='center', fig.height=5, fig.width=11}
 #Number of sentences
@@ -271,19 +268,18 @@ grid.arrange(p3, p4, ncol = 2)
 
 ```
 
-However, if looking at the number of sentences and the average words per sentence, we find that sentences in the inauguration speech have been longer and the average words per sentence have been smaller and smaller. That might because the pace of life turning more and more quick, people have already got used to reading short sentences posted on all kinds of social apps rather than reading newspapers and long sentences. As a result, people prefer shorter sentences when they listen to other people. The inauguration speech cannot escape from this trend. So, the pace of the speech has been faster and faster.
+However, if looking at the number of sentences and the average words per sentence, we can find that there is a uptrend for number of sentences and an obvious descend trend for the average words per sentence, which means Presidents started to shorten their sentences. That might because the pace of life turning more and more quick, people have already got used to reading short sentences posted on all kinds of social Apps rather than reading newspapers and long sentences. Indeed, shorter sentences are much more acceptable for people. As a result, Presidents started to talk to all of us by shortening their sentences.
 
 If combining these four figures, we should notice that not the length of the speech but the pace of the speech is changing.
 
-### What words did presidents like to say?
+### What words did Presidents say?
 ```{r wordcloud, message=FALSE, warning=FALSE, include=FALSE, fig.align='center'}
-folder.path="~/Desktop/Spr2017-Proj1-xuanzix/data/fulltext/"
+folder.path="../data/fulltext/"
 speeches=list.files(path = folder.path, pattern = "*.txt")
 prez.out=substr(speeches, 6, nchar(speeches)-4)
 
 length.speeches=rep(NA, length(speeches))
 ff.all<-Corpus(DirSource(folder.path,encoding="UTF-8"))
-
 
 ff.all<-tm_map(ff.all, stripWhitespace)
 ff.all<-tm_map(ff.all, content_transformer(tolower))
@@ -352,15 +348,16 @@ wordcloud(ff.dtm$term[ff.dtm$document==speeches[52]],
           main=prez.out[52])
 ```
 
-The word cloud technology shows us what did a President say much during the speech. First, President Clinton, who won the competition against George Bush. As a young politician at that time, he focused on economic revolution. So in his inauguration speech, we can see words like renewal, today, raise, and so on. 
+The word cloud technology shows us what does a President say much during the speech. First, President Clinton, who won the competition against George Bush. As a young politician at that time, he focused on economic revolution. So in his inauguration speech, we can see words like renewal, today, raise, and so on. 
 
 As for President George W Bush, just like his father, he focused more on safety problems inside and outside the country. During his term of office, US army invaded Iraq and Afghan. In his inauguration speech, we see tyranny, fire, defend, etc. 
 
 President Obama, the only President whose word cloud does not contain the word America. He is known as a person who is really good at speech. In his word cloud, we see journey, creed, technology. He focused on the revolution and he launched a series of new policies during his terms of office. He said in the inauguration speech: Our Journey is not complete. 
 
-Finally, President Trump has been focusing on solving the employment problem and protecting domestic workers before he won the presidential election. So during his inauguration speech, we see words like jobs, dreams, everyone factories, protected, etc.
+Finally, President Trump had been focusing on solving the employment problem and protecting domestic workers before he won the presidential election. So during his inauguration speech, we see words like jobs, dreams, everyone factories, protected, etc.
 
-In a word, through the word cloud, we can see clearly what a President want to do in his term of office and also his character sometimes.
+What's more, I find that three of recent four presidents loved to say "America" in their inauguration speech, especially President Trump, he hit the world for 35 times. So I made a plot to see if there is any trend. 
+
 
 ### Count the number of "America" in inauguration speeches
 ```{r, echo=FALSE, fig.height=4.5, fig.width=7,fig.align='center'}
@@ -387,7 +384,7 @@ america$name <- factor(america$name, rev.president.order)
 
 ```
 
-As mentioned before, recent Presidents prefer to the word America. From the figure above, beginning from President Roosevelt, the number of the word America has increased in a high speed. President Trump has said this word for about 35 times in the inauguration speech. It is a good way to win people's hearts. More important, this is a good way to let citizens feel proud of their home country. 
+From the figure above, beginning from President Warren G. Harding who was the president of the post World War period, the number of the word America has increased in a high speed. The word "America" is a good way to stimulate people's patriotism during the inauguration speech, also a good way to win people's hearts.
 
 ### Sentiment Analysis of Inauguration speeches
 ```{r sentiment, include=FALSE}
@@ -423,7 +420,7 @@ f.plotsent.len=function(In.list, InFile, InType, InTerm, President){
        col=ptcol.use,
        lwd="2",
        type="h",
-       main=President, ylab = "level", xlab = "Transcript")
+       main=President, ylab = "level", xlab = "Transcript from begining to the end")
   abline(h=0,lwd="2")
 }
 ```
@@ -439,7 +436,13 @@ f.plotsent.len(In.list=sentence.list, InFile="BarackObama",
                InType="inaug", InTerm=1, President="Barack Obama")
 ```
 
-Both President Trump and Obama ended their speech in a positive emotion since in the recent decade, America did not be caught in any serious international trouble. All the major problems were from the country itself. For instance, during Trump's speech, he said: For too long, a small group in our nation's capital has reaped the rewards of government while the people have borne the cost. But finally, he drew a beautiful picture of the country's future to every American. From the figure, at the end of his speech, the positive emotion went to the highest point. 
+From the plot, both President Trump and Obama has positive and negative emotion during their speeches, but President Trump's speech has more negative emotion, which known as unusually dark. He said: "For too long, a small group in our nation's capital has reaped the rewards of government while the people have borne the cost". But fortunately, he ended with positive altitude:"We will make America strong again. We will make America wealthy again. We will make America proud again." From the figure, at the end of his speech, the positive emotion went to the highest point. 
+```{r, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width="400px"}
+knitr::include_graphics("../figs/2.jpg")
+```
+
+As for President Bush and President Clinton, since at that time, America was confronted with some serious problems such as economic problems and country safety problems, the inauguration speeches were a little bit negative. From the sentiment analysis, we can see clearly that the blue parts are bigger than the red parts. And the negative emotion appeared at the end of the speech, which means at that time, even the President did not hold a positive attitude towards the future of the country.
+
 ```{r, echo=FALSE, fig.height=5, fig.width=10, message=FALSE, warning=FALSE}
 par(mfrow=c(1,2))
 f.plotsent.len(In.list=sentence.list, InFile="GeorgeWBush", 
@@ -450,9 +453,6 @@ f.plotsent.len(In.list=sentence.list, InFile="WilliamJClinton",
 
 ```
 
-As for President Bush and President Clinton, since at that time, America was confronted with some serious problems such as economic problems and country safety problems, the inauguration speeches were a little bit negative. From the sentiment analysis, we can see clearly that the blue parts are bigger than the red parts. And the negative emotion appeared at the end of the speech, which means at that time, even the President did not hold a positive attitude towards the future of the country.
-
-
-To sum up, the sentiment analysis demonstrates the President's attitude towards the future of this country.
+To sum up, the sentiment analysis can somehow demonstrates the President's attitude towards the future of this country.
 
 

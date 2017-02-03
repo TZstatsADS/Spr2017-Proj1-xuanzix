@@ -8,20 +8,20 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 Term: Spring 2017
 
-+ Projec title: Lorem ipsum dolor sit amet
-+ This project is conducted by [your name]
++ Projec title: What Do Inauguration Speeches Tell Us?
++ This project is conducted by [Xuanzi Xu]
 
-+ Project summary: [a short summary] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ Project summary: [In this project, I analyze the US President speeches in terms of the sentence length, the total words, the total vocabulary and so on. Meanwhile, I applied the word cloud to several speeches to demonstrate the change of the speech topic as time goes on. Also, considering the politic background and personal character, I illustrated the reason of such outputs. Finally, using sentiment analysis package, I analyzed the sentimental oscillation of different Presidents during the whole process of speech, also explained it in terms of the situations of economy, politics and etc.] 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
 ```
 proj/
-├── lib/
-├── data/
-├── doc/
-├── figs/
-└── output/
+????????? lib/
+????????? data/
+????????? doc/
+????????? figs/
+????????? output/
 ```
 
 Please see each subfolder for a README file.
